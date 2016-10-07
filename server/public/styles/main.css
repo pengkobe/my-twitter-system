@@ -1,0 +1,16 @@
+ul {
+	margin: 100px auto 0;
+	list-style: none;
+	width: 700px;
+	font: 30px helvetica;
+	font-weight: 100;
+}
+
+li {
+  margin-bottom: 50px;
+}
+
+footer, h1 {
+	margin: 100px auto 0;
+	width: 700px;
+}

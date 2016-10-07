@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}koajs REST API{% endblock %}</title>
+  <link rel="stylesheet" type="text/css" href="styles/main.css">
+</head>
+<body>
+  <section id="content">
+    {% block content %}
+      <ul>
+        <li>See <a href="/view/books">all</a> the books.</li>
+        <li>Get them by <a href="/books/1">id</a>.</li>
+        <li>curl -H "Content-Type: application/json" -d [json] http://localhost:1337/books/</li>
+      </ul>
+    {% endblock %}
+  </section>
+	<footer>
+		<h1> Don't forget to checkout the <a href="https://github.com/hemanth/koa-rest">code</a> </h1>
+  </footer>
+</body>
+</html>
