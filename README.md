@@ -11,7 +11,9 @@ https://github.com/jridgewell/multi-splice
 * `npm run build` to transform ES6 to ES5 using Babel
 
 ### refer
-https://github.com/hemanth/koa-rest
+[koa-generator](https://github.com/17koa/koa-generator)  
+~~https://github.com/hemanth/koa-rest~~   
+
 
 ### license
 MIT ©[kobepeng](http://yipeng.info)
