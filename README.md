@@ -1,19 +1,27 @@
 # my-twitter-system
-my own twitter system based on [koa](http://koajs.com/)&es6
 
-### boilerplate
-https://github.com/jridgewell/multi-splice
+> a simple & beauty & small twitter syste,[Cem
 
-## Usage
+## Build Setup
 
-* `npm run test` to run tests
-* `npm run lint` to lint js using ESLint
-* `npm run build` to transform ES6 to ES5 using Babel
+``` bash
+# install dependencies
+npm install
 
-### refer
-[koa-generator](https://github.com/17koa/koa-generator)  
-~~https://github.com/hemanth/koa-rest~~   
+# serve with hot reload at localhost:8080
+npm run dev
 
+# build for production with minification
+npm run build
 
-### license
-MIT ©[kobepeng](http://yipeng.info)
+# run unit tests
+npm run unit
+
+# run e2e tests
+npm run e2e
+
+# run all tests
+npm test
+```
+
+For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
