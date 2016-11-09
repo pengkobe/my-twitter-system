@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <hello></hello>
+    <img class="headimg" src="./assets/battery.png">
+    <twittermvc></twittermvc>
   </div>
 </template>
 
 <script>
-import Hello from './components/Hello'
+import twittermvc from './components/twittermvc'
 
 export default {
   name: 'app',
   components: {
-    Hello
+    twittermvc
   }
 }
 </script>
@@ -24,5 +24,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+img.headimg{
+  height: 75px;
 }
 </style>
