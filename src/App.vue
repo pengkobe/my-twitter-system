@@ -1,17 +1,17 @@
 <template>
   <div id="app">
     <img class="headimg" src="./assets/battery.png">
-    <twittermvc></twittermvc>
+    <index></index>
   </div>
 </template>
 
 <script>
-import twittermvc from './components/twittermvc'
+import index from './components/index'
 
 export default {
   name: 'app',
   components: {
-    twittermvc
+    index
   }
 }
 </script>
