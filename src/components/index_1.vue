@@ -2,8 +2,8 @@
     <div>
         <h1>简易Twitter系统</h1>
         <section class="twitterapp">
-            <add_twitter v-on:addTwitter="addTwitter_index"></add_twitter>
-            <twitter_list twitter="filteredTwitters"></twitter_list>
+            <add_twitter v-on:add="addTwitter"></add_twitter>
+            <twitter_list v-bind:twitterlist="twitters"></twitter_list>
             <footer class="info">
                 <p> Will written by <a href="http://yipeng.info">kobepeng</a></p>
             </footer>
@@ -13,25 +13,31 @@
 
 <script>
 // localstorage operation
-import {twitterStorage} from '../lib/utils'
+import {twitterStorage} from './lib/utils'
+import twitter_list from './twitter_list'
+import add_twitter from './add_twitter'
 
 // app Vue instance
 export default {
   name: 'TwitterMVC',
   // app initial state
    data () {
+        var data = twitterStorage().fetch();
+        console.log('pp:',data);
         return {
-            twitters: twitterStorage.fetch(),
+            twitters: data,
         }
    },
-
+   components: {
+    twitter_list,
+    add_twitter
   },
 
   // methods that implement data logic.
   // note there's no DOM manipulation here at all.
   methods: {
-      addTwitter_index (){
-
+      addTwitter (model){
+        alert('add twitter now!');
       }
   },
 
@@ -42,9 +48,6 @@ export default {
   }
 }
 
-
-// mount
-// app.$mount('.twitterapp')
 </script>
 
 <style>
@@ -53,7 +56,7 @@ export default {
         margin: 0;
         padding: 0;
     }
-    
+
     button {
         margin: 0;
         padding: 0;
@@ -69,7 +72,7 @@ export default {
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
-    
+
     body {
         font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
         line-height: 1.4em;
@@ -82,40 +85,40 @@ export default {
         -moz-osx-font-smoothing: grayscale;
         font-weight: 300;
     }
-    
+
     :focus {
         outline: 0;
     }
-    
+
     .hidden {
         display: none;
     }
-    
+
     .twitterapp {
         background: #fff;
         margin: 130px 0 40px 0;
         position: relative;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
     }
-    
+
     .twitterapp input::-webkit-input-placeholder {
         font-style: italic;
         font-weight: 300;
         color: #e6e6e6;
     }
-    
+
     .twitterapp input::-moz-placeholder {
         font-style: italic;
         font-weight: 300;
         color: #e6e6e6;
     }
-    
+
     .twitterapp input::input-placeholder {
         font-style: italic;
         font-weight: 300;
         color: #e6e6e6;
     }
-    
+
     .twitterapp h1 {
         position: absolute;
         top: -155px;
@@ -128,7 +131,7 @@ export default {
         -moz-text-rendering: optimizeLegibility;
         text-rendering: optimizeLegibility;
     }
-    
+
     .new-twitter,
     .edit {
         position: relative;
@@ -147,24 +150,24 @@ export default {
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
-    
+
     .new-twitter {
         padding: 16px 16px 16px 60px;
         border: none;
         background: rgba(0, 0, 0, 0.003);
         box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
     }
-    
+
     .main {
         position: relative;
         z-index: 2;
         border-top: 1px solid #e6e6e6;
     }
-    
+
     label[for='toggle-all'] {
         display: none;
     }
-    
+
     .toggle-all {
         position: absolute;
         top: -55px;
@@ -175,50 +178,50 @@ export default {
         border: none;
         /* Mobile Safari */
     }
-    
+
     .toggle-all:before {
         content: ' > ';
         font-size: 22px;
         color: #e6e6e6;
         padding: 10px 27px 10px 27px;
     }
-    
+
     .toggle-all:checked:before {
         color: #737373;
     }
-    
+
     .twitter-list {
         margin: 0;
         padding: 0;
         list-style: none;
     }
-    
+
     .twitter-list li {
         position: relative;
         font-size: 24px;
         border-bottom: 1px solid #ededed;
     }
-    
+
     .twitter-list li:last-child {
         border-bottom: none;
     }
-    
+
     .twitter-list li.editing {
         border-bottom: none;
         padding: 0;
     }
-    
+
     .twitter-list li.editing .edit {
         display: block;
         width: 506px;
         padding: 12px 16px;
         margin: 0 0 0 43px;
     }
-    
+
     .twitter-list li.editing .view {
         display: none;
     }
-    
+
     .twitter-list li .toggle {
         text-align: center;
         width: 40px;
@@ -234,15 +237,15 @@ export default {
         -webkit-appearance: none;
         appearance: none;
     }
-    
+
     .twitter-list li .toggle:after {
         content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');
     }
-    
+
     .twitter-list li .toggle:checked:after {
         content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
     }
-    
+
     .twitter-list li label {
         word-break: break-all;
         padding: 15px 60px 15px 15px;
@@ -251,12 +254,12 @@ export default {
         line-height: 1.2;
         transition: color 0.4s;
     }
-    
+
     .twitter-list li.completed label {
         color: #d9d9d9;
         text-decoration: line-through;
     }
-    
+
     .twitter-list li .destroy {
         display: none;
         position: absolute;
@@ -271,27 +274,27 @@ export default {
         margin-bottom: 11px;
         transition: color 0.2s ease-out;
     }
-    
+
     .twitter-list li .destroy:hover {
         color: #af5b5e;
     }
-    
+
     .twitter-list li .destroy:after {
         content: 'X';
     }
-    
+
     .twitter-list li:hover .destroy {
         display: block;
     }
-    
+
     .twitter-list li .edit {
         display: none;
     }
-    
+
     .twitter-list li.editing:last-child {
         margin-bottom: -1px;
     }
-    
+
     .footer {
         color: #777;
         padding: 10px 15px;
@@ -299,7 +302,7 @@ export default {
         text-align: center;
         border-top: 1px solid #e6e6e6;
     }
-    
+
     .footer:before {
         content: '';
         position: absolute;
@@ -310,16 +313,16 @@ export default {
         overflow: hidden;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6, 0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6, 0 17px 2px -6px rgba(0, 0, 0, 0.2);
     }
-    
+
     .twitter-count {
         float: left;
         text-align: left;
     }
-    
+
     .twitter-count strong {
         font-weight: 300;
     }
-    
+
     .filters {
         margin: 0;
         padding: 0;
@@ -328,11 +331,11 @@ export default {
         right: 0;
         left: 0;
     }
-    
+
     .filters li {
         display: inline;
     }
-    
+
     .filters li a {
         color: inherit;
         margin: 3px;
@@ -341,15 +344,15 @@ export default {
         border: 1px solid transparent;
         border-radius: 3px;
     }
-    
+
     .filters li a:hover {
         border-color: rgba(175, 47, 47, 0.1);
     }
-    
+
     .filters li a.selected {
         border-color: rgba(175, 47, 47, 0.2);
     }
-    
+
     .clear-completed,
     html .clear-completed:active {
         float: right;
@@ -358,11 +361,11 @@ export default {
         text-decoration: none;
         cursor: pointer;
     }
-    
+
     .clear-completed:hover {
         text-decoration: underline;
     }
-    
+
     .info {
         margin: 65px auto 0;
         color: #bfbfbf;
@@ -370,17 +373,17 @@ export default {
         text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
         text-align: center;
     }
-    
+
     .info p {
         line-height: 1;
     }
-    
+
     .info a {
         color: inherit;
         text-decoration: none;
         font-weight: 400;
     }
-    
+
     .info a:hover {
         text-decoration: underline;
     }
@@ -388,11 +391,11 @@ export default {
 	Hack to remove background from Mobile Safari.
 	Can't use it globally since it destroys checkboxes in Firefox
 */
-    
+
     [v-cloak] {
         display: none;
     }
-    
+
     @media screen and (-webkit-min-device-pixel-ratio:0) {
         .toggle-all,
         .twitter-list li .toggle {
@@ -408,7 +411,7 @@ export default {
             appearance: none;
         }
     }
-    
+
     @media (max-width: 430px) {
         .footer {
             height: 50px;

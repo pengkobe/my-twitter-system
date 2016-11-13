@@ -1,7 +1,7 @@
 // localStorage persistence
 var STORAGE_KEY = 'twitters-vuejs-2.0'
 
-export function twitterStorage(name, url) {
+export function twitterStorage() {
     return {
         fetch: function () {
             var twitters = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')

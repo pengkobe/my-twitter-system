@@ -1,18 +1,18 @@
 <template>
-            <li class="twitter" 
+            <li class="twitter"
             :class="{ completed: twitter.completed, editing: twitter == editedTwitter }">
                 <div class="view">
                     <input class="toggle" type="checkbox" v-model="twitter.completed">
                     <label @dblclick="edit(twitter)">{{ twitter.title }}</label>
                     <button class="destroy" @click="remove(twitter)"></button>
                 </div>
-                <input  
-                class="edit" 
-                type="text" 
-                v-model="twitter.title" 
-                v-twitter-focus="twitter == editedTwitter" 
+                <input
+                class="edit"
+                type="text"
+                v-model="twitter.title"
+                v-twitter-focus="twitter == editedTwitter"
                 @blur="doneEdit(twitter)"
-                @keyup.enter="doneEdit(twitter)" 
+                @keyup.enter="doneEdit(twitter)"
                 @keyup.esc="cancelEdit(twitter)" />
             </li>
 </template>
@@ -20,40 +20,23 @@
 
 <script>
 
-// visibility filters
-var filters = {
-  all: function (twitters) {
-    return twitters
-  },
-  active: function (twitters) {
-    return twitters.filter(function (twitter) {
-      return !twitter.completed
-    })
-  },
-  completed: function (twitters) {
-    return twitters.filter(function (twitter) {
-      return twitter.completed
-    })
-  }
-}
 
 // app Vue instance
 export default {
   name: 'twitter',
-  props: ['data'],
+  props: ['twitterModel'],
 
   // app initial state
   data () {
+
         return {
-            twitter: twitterStorage.fetch(),
+            twitter: this.twitterModel,
             editedTwitter: null,
-            visibility: 'all'
         }
    },
 
   methods: {
     remove: function (twitter) {
-      this.twitters.splice(this.twitters.indexOf(twitter), 1)
     },
 
     edit: function (twitter) {
@@ -78,9 +61,16 @@ export default {
     },
 
     removeCompleted: function () {
-      this.twitters = filters.active(this.twitters)
     }
   },
+
+  directives: {
+    'twitter-focus': function (el, value) {
+      if (value) {
+        el.focus()
+      }
+    }
+  }
 
 }
 
