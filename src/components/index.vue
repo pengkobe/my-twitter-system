@@ -3,27 +3,27 @@
         <section class="twitterapp">
             <header class="header">
                 <h1>简易Twitter系统</h1>
-                <input class="new-twitter" autofocus autocomplete="off" 
+                <input class="new-twitter" autofocus autocomplete="off"
                 placeholder="你正在想什么/做什么.写下来吧..."
-                v-model="newTwitter" 
+                v-model="newTwitter"
                 @keyup.enter="addTwitter">
             </header>
             <section class="main" v-show="twitters.length" v-cloak>
                 <input class="toggle-all" type="checkbox" v-model="allDone">
                 <ul class="twitter-list">
                     <li class="twitter"
-                     v-for="twitter in filteredTwitters"  
-                    :key="twitter.id" 
+                     v-for="twitter in filteredTwitters"
+                    :key="twitter.id"
                     :class="{ completed: twitter.completed, editing: twitter == editedTwitter }">
                         <div class="view">
                             <input class="toggle" type="checkbox" v-model="twitter.completed">
                             <label @dblclick="editTwitter(twitter)">{{ twitter.title }}</label>
                             <button class="destroy" @click="removeTwitter(twitter)"></button>
                         </div>
-                        <input class="edit" type="text" 
-                        v-model="twitter.title" 
-                        v-twitter-focus="twitter == editedTwitter" 
-                        @blur="doneEdit(twitter)" 
+                        <input class="edit" type="text"
+                        v-model="twitter.title"
+                        v-twitter-focus="twitter == editedTwitter"
+                        @blur="doneEdit(twitter)"
                         @keyup.enter="doneEdit(twitter)"
                         @keyup.esc="cancelEdit(twitter)">
                     </li>
@@ -31,7 +31,7 @@
             </section>
             <footer class="footer" v-show="twitters.length" v-cloak>
                 <span class="twitter-count">
-                    <strong>{{ remaining }}</strong> 还剩: {{ remaining | pluralize }} 
+                    <strong>{{ remaining }}</strong> 还剩: {{ remaining | pluralize }}
                 </span>
                 <ul class="filters">
                     <li><a href="#/all" :class="{ selected: visibility == 'all' }">全部</a></li>
@@ -39,7 +39,7 @@
                     <li><a href="#/completed" :class="{ selected: visibility == 'completed' }">已完成</a></li>
                 </ul>
                 <button class="clear-completed"
-                 @click="removeCompleted" 
+                 @click="removeCompleted"
                  v-show="twitters.length > remaining">
                    删除成功
                 </button>
@@ -222,7 +222,7 @@ onHashChange()
         margin: 0;
         padding: 0;
     }
-    
+
     button {
         margin: 0;
         padding: 0;
@@ -238,7 +238,7 @@ onHashChange()
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
-    
+
     body {
         font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
         line-height: 1.4em;
@@ -251,40 +251,40 @@ onHashChange()
         -moz-osx-font-smoothing: grayscale;
         font-weight: 300;
     }
-    
+
     :focus {
         outline: 0;
     }
-    
+
     .hidden {
         display: none;
     }
-    
+
     .twitterapp {
         background: #fff;
         margin: 130px 0 40px 0;
         position: relative;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
     }
-    
+
     .twitterapp input::-webkit-input-placeholder {
         font-style: italic;
         font-weight: 300;
         color: #e6e6e6;
     }
-    
+
     .twitterapp input::-moz-placeholder {
         font-style: italic;
         font-weight: 300;
         color: #e6e6e6;
     }
-    
+
     .twitterapp input::input-placeholder {
         font-style: italic;
         font-weight: 300;
         color: #e6e6e6;
     }
-    
+
     .twitterapp h1 {
         position: absolute;
         top: -155px;
@@ -297,7 +297,7 @@ onHashChange()
         -moz-text-rendering: optimizeLegibility;
         text-rendering: optimizeLegibility;
     }
-    
+
     .new-twitter,
     .edit {
         position: relative;
@@ -316,24 +316,24 @@ onHashChange()
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
-    
+
     .new-twitter {
         padding: 16px 16px 16px 60px;
         border: none;
         background: rgba(0, 0, 0, 0.003);
         box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
     }
-    
+
     .main {
         position: relative;
         z-index: 2;
         border-top: 1px solid #e6e6e6;
     }
-    
+
     label[for='toggle-all'] {
         display: none;
     }
-    
+
     .toggle-all {
         position: absolute;
         top: -55px;
@@ -344,50 +344,50 @@ onHashChange()
         border: none;
         /* Mobile Safari */
     }
-    
+
     .toggle-all:before {
         content: ' > ';
         font-size: 22px;
         color: #e6e6e6;
         padding: 10px 27px 10px 27px;
     }
-    
+
     .toggle-all:checked:before {
         color: #737373;
     }
-    
+
     .twitter-list {
         margin: 0;
         padding: 0;
         list-style: none;
     }
-    
+
     .twitter-list li {
         position: relative;
         font-size: 24px;
         border-bottom: 1px solid #ededed;
     }
-    
+
     .twitter-list li:last-child {
         border-bottom: none;
     }
-    
+
     .twitter-list li.editing {
         border-bottom: none;
         padding: 0;
     }
-    
+
     .twitter-list li.editing .edit {
         display: block;
         width: 506px;
         padding: 12px 16px;
         margin: 0 0 0 43px;
     }
-    
+
     .twitter-list li.editing .view {
         display: none;
     }
-    
+
     .twitter-list li .toggle {
         text-align: center;
         width: 40px;
@@ -403,15 +403,15 @@ onHashChange()
         -webkit-appearance: none;
         appearance: none;
     }
-    
+
     .twitter-list li .toggle:after {
         content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');
     }
-    
+
     .twitter-list li .toggle:checked:after {
         content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
     }
-    
+
     .twitter-list li label {
         word-break: break-all;
         padding: 15px 60px 15px 15px;
@@ -420,12 +420,12 @@ onHashChange()
         line-height: 1.2;
         transition: color 0.4s;
     }
-    
+
     .twitter-list li.completed label {
         color: #d9d9d9;
         text-decoration: line-through;
     }
-    
+
     .twitter-list li .destroy {
         display: none;
         position: absolute;
@@ -440,27 +440,27 @@ onHashChange()
         margin-bottom: 11px;
         transition: color 0.2s ease-out;
     }
-    
+
     .twitter-list li .destroy:hover {
         color: #af5b5e;
     }
-    
+
     .twitter-list li .destroy:after {
         content: 'X';
     }
-    
+
     .twitter-list li:hover .destroy {
         display: block;
     }
-    
+
     .twitter-list li .edit {
         display: none;
     }
-    
+
     .twitter-list li.editing:last-child {
         margin-bottom: -1px;
     }
-    
+
     .footer {
         color: #777;
         padding: 10px 15px;
@@ -468,7 +468,7 @@ onHashChange()
         text-align: center;
         border-top: 1px solid #e6e6e6;
     }
-    
+
     .footer:before {
         content: '';
         position: absolute;
@@ -479,16 +479,16 @@ onHashChange()
         overflow: hidden;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6, 0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6, 0 17px 2px -6px rgba(0, 0, 0, 0.2);
     }
-    
+
     .twitter-count {
         float: left;
         text-align: left;
     }
-    
+
     .twitter-count strong {
         font-weight: 300;
     }
-    
+
     .filters {
         margin: 0;
         padding: 0;
@@ -497,11 +497,11 @@ onHashChange()
         right: 0;
         left: 0;
     }
-    
+
     .filters li {
         display: inline;
     }
-    
+
     .filters li a {
         color: inherit;
         margin: 3px;
@@ -510,15 +510,15 @@ onHashChange()
         border: 1px solid transparent;
         border-radius: 3px;
     }
-    
+
     .filters li a:hover {
         border-color: rgba(175, 47, 47, 0.1);
     }
-    
+
     .filters li a.selected {
         border-color: rgba(175, 47, 47, 0.2);
     }
-    
+
     .clear-completed,
     html .clear-completed:active {
         float: right;
@@ -527,11 +527,11 @@ onHashChange()
         text-decoration: none;
         cursor: pointer;
     }
-    
+
     .clear-completed:hover {
         text-decoration: underline;
     }
-    
+
     .info {
         margin: 65px auto 0;
         color: #bfbfbf;
@@ -539,17 +539,17 @@ onHashChange()
         text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
         text-align: center;
     }
-    
+
     .info p {
         line-height: 1;
     }
-    
+
     .info a {
         color: inherit;
         text-decoration: none;
         font-weight: 400;
     }
-    
+
     .info a:hover {
         text-decoration: underline;
     }
@@ -557,11 +557,11 @@ onHashChange()
 	Hack to remove background from Mobile Safari.
 	Can't use it globally since it destroys checkboxes in Firefox
 */
-    
+
     [v-cloak] {
         display: none;
     }
-    
+
     @media screen and (-webkit-min-device-pixel-ratio:0) {
         .toggle-all,
         .twitter-list li .toggle {
@@ -577,7 +577,7 @@ onHashChange()
             appearance: none;
         }
     }
-    
+
     @media (max-width: 430px) {
         .footer {
             height: 50px;

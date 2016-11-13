@@ -13,7 +13,7 @@
 
 <script>
 // localstorage operation
-import {twitterStorage} from './lib/utils'
+import {twitterStorage} from '../libs/utils'
 import twitter_list from './twitter_list'
 import add_twitter from './add_twitter'
 
