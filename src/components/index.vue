@@ -1,218 +1,52 @@
 <template>
     <div>
+        <h1>简易Twitter系统</h1>
         <section class="twitterapp">
-            <header class="header">
-                <h1>简易Twitter系统</h1>
-                <input class="new-twitter" autofocus autocomplete="off"
-                placeholder="你正在想什么/做什么.写下来吧..."
-                v-model="newTwitter"
-                @keyup.enter="addTwitter">
-            </header>
-            <section class="main" v-show="twitters.length" v-cloak>
-                <input class="toggle-all" type="checkbox" v-model="allDone">
-                <ul class="twitter-list">
-                    <li class="twitter"
-                     v-for="twitter in filteredTwitters"
-                    :key="twitter.id"
-                    :class="{ completed: twitter.completed, editing: twitter == editedTwitter }">
-                        <div class="view">
-                            <input class="toggle" type="checkbox" v-model="twitter.completed">
-                            <label @dblclick="editTwitter(twitter)">{{ twitter.title }}</label>
-                            <button class="destroy" @click="removeTwitter(twitter)"></button>
-                        </div>
-                        <input class="edit" type="text"
-                        v-model="twitter.title"
-                        v-twitter-focus="twitter == editedTwitter"
-                        @blur="doneEdit(twitter)"
-                        @keyup.enter="doneEdit(twitter)"
-                        @keyup.esc="cancelEdit(twitter)">
-                    </li>
-                </ul>
-            </section>
-            <footer class="footer" v-show="twitters.length" v-cloak>
-                <span class="twitter-count">
-                    <strong>{{ remaining }}</strong> 还剩: {{ remaining | pluralize }}
-                </span>
-                <ul class="filters">
-                    <li><a href="#/all" :class="{ selected: visibility == 'all' }">全部</a></li>
-                    <li><a href="#/active" :class="{ selected: visibility == 'active' }">正在做</a></li>
-                    <li><a href="#/completed" :class="{ selected: visibility == 'completed' }">已完成</a></li>
-                </ul>
-                <button class="clear-completed"
-                 @click="removeCompleted"
-                 v-show="twitters.length > remaining">
-                   删除成功
-                </button>
+            <add_twitter v-on:add="addTwitter"></add_twitter>
+            <twitter_list v-bind:twitterlist="twitters"></twitter_list>
+            <footer class="info">
+                <p> Will written by <a href="http://yipeng.info">kobepeng</a></p>
             </footer>
-        </section>
-        <footer class="info">
-            <p> Will written by <a href="http://yipeng.info">kobepeng</a></p>
-        </footer>
     </div>
 </template>
 
 
 <script>
-// Full spec-compliant TwitterMVC with localStorage persistence
-// and hash-based routing in ~120 effective lines of JavaScript.
-
-// localStorage persistence
-var STORAGE_KEY = 'twitters-vuejs-2.0'
-var twitterStorage = {
-  fetch: function () {
-    var twitters = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
-    twitters.forEach(function (twitter, index) {
-      twitter.id = index
-    })
-    twitterStorage.uid = twitters.length
-    return twitters
-  },
-  save: function (twitters) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(twitters))
-  }
-}
-
-// visibility filters
-var filters = {
-  all: function (twitters) {
-    return twitters
-  },
-  active: function (twitters) {
-    return twitters.filter(function (twitter) {
-      return !twitter.completed
-    })
-  },
-  completed: function (twitters) {
-    return twitters.filter(function (twitter) {
-      return twitter.completed
-    })
-  }
-}
+// localstorage operation
+import {twitterStorage} from '../libs/utils'
+import twitter_list from './twitter_list'
+import add_twitter from './add_twitter'
 
 // app Vue instance
 export default {
   name: 'TwitterMVC',
   // app initial state
    data () {
+        var data = twitterStorage().fetch();
+        console.log('pp:',data);
         return {
-            twitters: twitterStorage.fetch(),
-            newTwitter: '',
-            editedTwitter: null,
-            visibility: 'all'
+            twitters: data,
         }
    },
-
-  // watch twitters change for localStorage persistence
-  watch: {
-    twitters: {
-      handler: function (twitters) {
-        twitterStorage.save(twitters)
-      },
-      deep: true
-    }
-  },
-
-  // computed properties
-  // http://vuejs.org/guide/computed.html
-  computed: {
-    filteredTwitters: function () {
-      return filters[this.visibility](this.twitters)
-    },
-    remaining: function () {
-      return filters.active(this.twitters).length
-    },
-    allDone: {
-      get: function () {
-        return this.remaining === 0
-      },
-      set: function (value) {
-        this.twitters.forEach(function (twitter) {
-          twitter.completed = value
-        })
-      }
-    }
-  },
-
-  filters: {
-    pluralize: function (n) {
-      return n === 1 ? 'item' : 'items'
-    }
+   components: {
+    twitter_list,
+    add_twitter
   },
 
   // methods that implement data logic.
   // note there's no DOM manipulation here at all.
   methods: {
-    addTwitter: function () {
-      var value = this.newTwitter && this.newTwitter.trim()
-      if (!value) {
-        return
+      addTwitter (model){
+        alert('add twitter now!');
       }
-      this.twitters.push({
-        id: twitterStorage.uid++,
-        title: value,
-        completed: false
-      })
-      this.newTwitter = ''
-    },
-
-    removeTwitter: function (twitter) {
-      this.twitters.splice(this.twitters.indexOf(twitter), 1)
-    },
-
-    editTwitter: function (twitter) {
-      this.beforeEditCache = twitter.title
-      this.editedTwitter = twitter
-    },
-
-    doneEdit: function (twitter) {
-      if (!this.editedTwitter) {
-        return
-      }
-      this.editedTwitter = null
-      twitter.title = twitter.title.trim()
-      if (!twitter.title) {
-        this.removeTwitter(twitter)
-      }
-    },
-
-    cancelEdit: function (twitter) {
-      this.editedTwitter = null
-      twitter.title = this.beforeEditCache
-    },
-
-    removeCompleted: function () {
-      this.twitters = filters.active(this.twitters)
-    }
   },
 
   // a custom directive to wait for the DOM to be updated
   // before focusing on the input field.
   // http://vuejs.org/guide/custom-directive.html
   directives: {
-    'twitter-focus': function (el, value) {
-      if (value) {
-        el.focus()
-      }
-    }
   }
 }
-
-// handle routing
-function onHashChange () {
-  var visibility = window.location.hash.replace(/#\/?/, '')
-  if (filters[visibility]) {
-    app.visibility = visibility
-  } else {
-    window.location.hash = ''
-    app.visibility = 'all'
-  }
-}
-
-window.addEventListener('hashchange', onHashChange)
-onHashChange()
-
-// mount
-// app.$mount('.twitterapp')
 
 </script>
 
