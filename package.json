@@ -2,7 +2,7 @@
   "name": "my-twitter-system",
   "version": "1.0.0",
   "description": "a simple & beauty & small twitter syste,[Cem",
-  "author": "pengkobe <526337223@qq.com>",
+  "author": "pengkobe <yipeng.info@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
