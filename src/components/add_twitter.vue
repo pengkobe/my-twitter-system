@@ -15,20 +15,20 @@ export default {
    data () {
         return {
             newTwitter: ''
-        }
+        };
   },
 
   methods: {
     add: function () {
-      var value = this.newTwitter && this.newTwitter.trim()
+      var value = this.newTwitter && this.newTwitter.trim();
       if (!value) {
-        return
+        return;
       }
       this.$emit('add',value);
       this.newTwitter = '';
     }
   }
-}
+};
 
 </script>
 

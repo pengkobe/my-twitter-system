@@ -50,7 +50,8 @@ export default {
 
 </script>
 
-<style>
+
+<style lang="scss">
     html,
     body {
         margin: 0;
@@ -101,35 +102,34 @@ export default {
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
     }
     
-    .twitterapp input::-webkit-input-placeholder {
-        font-style: italic;
-        font-weight: 300;
-        color: #e6e6e6;
-    }
-    
-    .twitterapp input::-moz-placeholder {
-        font-style: italic;
-        font-weight: 300;
-        color: #e6e6e6;
-    }
-    
-    .twitterapp input::input-placeholder {
-        font-style: italic;
-        font-weight: 300;
-        color: #e6e6e6;
-    }
-    
-    .twitterapp h1 {
-        position: absolute;
-        top: -155px;
-        width: 100%;
-        font-size: 50px;
-        font-weight: 100;
-        text-align: center;
-        color: rgba(175, 47, 47, 0.15);
-        -webkit-text-rendering: optimizeLegibility;
-        -moz-text-rendering: optimizeLegibility;
-        text-rendering: optimizeLegibility;
+    .twitterapp {
+        input::-webkit-input-placeholder {
+            font-style: italic;
+            font-weight: 300;
+            color: #e6e6e6;
+        }
+        input::-moz-placeholder {
+            font-style: italic;
+            font-weight: 300;
+            color: #e6e6e6;
+        }
+        input::input-placeholder {
+            font-style: italic;
+            font-weight: 300;
+            color: #e6e6e6;
+        }
+        h1 {
+            position: absolute;
+            top: -155px;
+            width: 100%;
+            font-size: 50px;
+            font-weight: 100;
+            text-align: center;
+            color: rgba(175, 47, 47, 0.15);
+            -webkit-text-rendering: optimizeLegibility;
+            -moz-text-rendering: optimizeLegibility;
+            text-rendering: optimizeLegibility;
+        }
     }
     
     .info {
@@ -140,24 +140,24 @@ export default {
         text-align: center;
     }
     
-    .info p {
-        line-height: 1;
+    .info {
+        p {
+            line-height: 1;
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+            font-weight: 400;
+        }
+        o a:hover {
+            text-decoration: underline;
+        }
     }
-    
-    .info a {
-        color: inherit;
-        text-decoration: none;
-        font-weight: 400;
-    }
-    
-    .info a:hover {
-        text-decoration: underline;
-    }
-
     /*
 	Hack to remove background from Mobile Safari.
 	Can't use it globally since it destroys checkboxes in Firefox
     */
+    
     [v-cloak] {
         display: none;
     }
